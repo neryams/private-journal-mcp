@@ -5,37 +5,37 @@ A comprehensive MCP (Model Context Protocol) server that provides Claude with pr
 ## Features
 
 ### Journaling
+
 - **Multi-section journaling**: Separate categories for feelings, project notes, user context, technical insights, and world knowledge
 - **Dual storage**: Project notes stay with projects, personal thoughts in user home directory
 - **Timestamped entries**: Each entry automatically dated with microsecond precision
 - **YAML frontmatter**: Structured metadata for each entry
 
 ### Search & Discovery
+
 - **Semantic search**: Natural language queries using local AI embeddings
 - **Vector similarity**: Find conceptually related entries, not just keyword matches
 - **Local AI processing**: Uses @xenova/transformers - no external API calls required
 - **Automatic indexing**: Embeddings generated for all entries on startup and ongoing
 
 ### Privacy & Performance
+
 - **Completely private**: All processing happens locally, no data leaves your machine
 - **Fast operation**: Optimized file structure and in-memory similarity calculations
 - **Robust fallbacks**: Intelligent path resolution across platforms
 
 ## Installation
 
-```bash
-npm install -g private-journal-mcp
-```
-
-Or install locally:
+Clone the repo, then
 
 ```bash
-npm install private-journal-mcp
+npm link
 ```
 
 ## Usage
 
 ### Basic Usage
+
 ```bash
 private-journal-mcp
 ```
@@ -43,6 +43,7 @@ private-journal-mcp
 This creates journal entries in `.private-journal/` in the current working directory.
 
 ### Custom Journal Path
+
 ```bash
 private-journal-mcp --journal-path /path/to/my/journal
 ```
@@ -50,11 +51,13 @@ private-journal-mcp --journal-path /path/to/my/journal
 ### MCP Configuration
 
 #### Claude Code (One-liner)
+
 ```bash
-claude mcp add-json private-journal '{"type":"stdio","command":"npx","args":["github:obra/private-journal-mcp"]}' -s user
+claude mcp add-json private-journal '{"type":"stdio","command":"npx","args":["private-journal-mcp"]}' -s user
 ```
 
 #### Manual Configuration
+
 Add to your MCP settings (e.g., Claude Desktop configuration):
 
 ```json
@@ -62,7 +65,7 @@ Add to your MCP settings (e.g., Claude Desktop configuration):
   "mcpServers": {
     "private-journal": {
       "command": "npx",
-      "args": ["github:obra/private-journal-mcp"]
+      "args": ["private-journal-mcp"]
     }
   }
 }
@@ -75,26 +78,34 @@ The server will automatically find a suitable location for the journal files.
 The server provides comprehensive journaling and search capabilities:
 
 ### `process_thoughts`
+
 Multi-section private journaling with these optional categories:
+
 - **feelings**: Private emotional processing space
-- **project_notes**: Technical insights specific to current project  
+- **project_notes**: Technical insights specific to current project
 - **user_context**: Notes about collaborating with humans
 - **technical_insights**: General software engineering learnings
 - **world_knowledge**: Domain knowledge and interesting discoveries
 
 ### `search_journal`
+
 Semantic search across all journal entries:
+
 - **query** (required): Natural language search query
 - **limit**: Maximum results (default: 10)
 - **type**: Search scope - 'project', 'user', or 'both' (default: 'both')
 - **sections**: Filter by specific categories
 
 ### `read_journal_entry`
+
 Read full content of specific entries:
+
 - **path** (required): File path from search results
 
 ### `list_recent_entries`
+
 Browse recent entries chronologically:
+
 - **limit**: Maximum entries (default: 10)
 - **type**: Entry scope - 'project', 'user', or 'both' (default: 'both')
 - **days**: Days back to search (default: 30)
@@ -102,6 +113,7 @@ Browse recent entries chronologically:
 ## File Structure
 
 ### Project Journal (per project)
+
 ```
 .private-journal/
 ├── 2025-05-31/
@@ -111,6 +123,7 @@ Browse recent entries chronologically:
 ```
 
 ### User Journal (global)
+
 ```
 ~/.private-journal/
 ├── 2025-05-31/
@@ -120,11 +133,12 @@ Browse recent entries chronologically:
 ```
 
 ### Entry Format
+
 Each markdown file contains YAML frontmatter and structured sections:
 
 ```markdown
 ---
-title: "2:30:45 PM - May 31, 2025"
+title: '2:30:45 PM - May 31, 2025'
 date: 2025-05-31T14:30:45.123Z
 timestamp: 1717160645123
 ---
